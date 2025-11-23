@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Bondi – Pista de Error</title>
+    <style>
+        /* -----------------------------------------------
+         Reset y tipografía básica
+        ------------------------------------------------- */
+        *, *::before, *::after {margin:0;padding:0;box-sizing:border-box;}
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background:#000;
+        color:#0f0;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            overflow:hidden;
+        }
+
+        /* -----------------------------------------------
+           Contenedor de pantalla
+        ------------------------------------------------- */
+        .screen {
+         width:90vw;
+            max-width:800px;
+            text-align:center;
+            animation:fadeIn .5s ease;
+        }
+      .hidden {display:none;}
+
+        h1 {font-size:2.5rem;margin-bottom:1rem;letter-spacing:.08em;}
+        p  {font-size:1.2rem;line-height:1.5;margin-bottom:.8rem;}
+
+        /* -------------------------------------------------
+        Botón de avance
+        -------------------------------------------- */
+        .btn {
+            margin-top:2rem;
+            padding:.6rem 1.2rem;
+            background:#111;
+           border:2px solid #0f0;
+          color:#0f0;
+            cursor:pointer;
+            font-size:1rem;
+            transition:background .2s,color .2s;
+        }
+        .btn:hover {
+            background:#0f0;
+            color:#000;
+        }
+
+        /* -------------------------------------------------
+           Animaciones simples
+        ------------------------------------------------ */
+        @keyframes fadeIn {
+            from {opacity:0;}
+            to   {opacity:1;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ------ Pantalla Inicial ------- -->
+    <section id="screen1" class="screen">
+        <h1>SISTEMA BONDI</h1>
+        <p>Protocolo de Conexión Humana</p>
+        <p>Iniciando desbloqueo de fragmentos</p>
+        <button class="btn" onclick="nextScreen()">▶ Continuar</button>
+    </section>
+
+    <!-- ---------- Pantalla de Instrucciones ---------- -->
+    <section id="screen2" class="screen hidden">
+       <h1>Misión: Liberar un fragmento de ti</h1>
+      <p>Regla única: Ser auténtico</p>
+        <p>Tiempo de activación: Ahora</p>
+        <button class="btn" onclick="nextScreen()">▶ Continuar</button>
+    </section>
+
+    <!-- ------ Pantalla Final ------- -->
+    <section id="screen3" class="screen hidden">
+    <h1>Conexión completada</h1>
+        <p>Fragmentos unidos</p>
+        <p>Red reestablecida</p>
+    </section>
+
+    <script>
+        // Lista de IDs de pantalla en orden
+        const screens = ['screen1','screen2','screen3'];
+        let current = 0;
+
+        function nextScreen() {
+            // Oculta pantalla actual
+            document.getElementById(screens[current]).classList.add('hidden');
+
+        // Avanza (no pasa del último)
+          if (current < screens.length - 1) current++;
+
+            // Muestra la siguiente
+            document.getElementById(screens[current]).classList.remove('hidden');
+     }
+    </script>
+</body>
+</html>
