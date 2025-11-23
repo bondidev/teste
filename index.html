@@ -1,157 +1,250 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-   <title>Bondi system </title>
-    <style>
-        /* --- Reset y tipografía básica --- */
-       *{margin:0;padding:0;box-sizing:border-box;}
-      body{
-            font-family: 'Courier New', Courier, monospace;
-            background:#000;
-          color:#0f0;
-            height:100vh;
-            overflow:hidden;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
+<meta charset="UTF-8">
+<title>SISTEMA BONDI – Hacker UI</title>
+<style>
+/* -----------------------------------------------
+   Reset y tipografía
+----------------------------------------- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;}
+body{
+    font-family:'Courier New',Courier,monospace;
+    background:#0b0b0b;
+  color:#0f0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hiden;
+}
 
-        /* --- Contenedor de pantalla --- */
-      .screen{
-            position:absolute;
-         width:90vw;
-      max-width:800px;
-            text-align:center;
-            animation:fadeIn 0.6s ease;
-        }
-       .hidden{display:none;}
+/* ----------------------------------------
+   Contenedores de pantalla
+-------------------------------------------- */
+.screen{
+    width:90vw;
+    max-width:800px;
+    text-align:center;
+    animation:fadeIn .5s ease forwards;
+}
+.hidden{display:none;}
 
-        /* --- Texto grande y espaciado --- */
-        h1{
-       font-size:2.5rem;
-            letter-spacing:.1em;
-            margin-bottom:1rem;
-        }
-        p{
-       font-size:1.2rem;
-            line-height:1.5;
-        }
+/* -------------------------------------------
+   Títulos con efecto glitch (más limpio)
+-------------------------------------------- */
+.glitch{
+   position:relative;
+    font-size:2.2rem;
+    letter-spacing:.08em;
+    margin-bottom:.8rem;
+}
+.glitch::before,
+.glitch::after{
+    content:attr(data-text);
+    position:absolute;
+    left:0;top:0;
+    width:100%;overflow:hidden;
+    clip:rect(0,900px,0,0);
+}
+.glitch::before{
+  left:-2px;
+    text-shadow:2px 0 #ff00c8;
+    animation:glitchTop 2s infinite linear alternate-reverse;
+}
+.glitch::after{
+    left:2px;
+    text-shadow:-2px 0 #00fff9;
+    animation:glitchBottom 2s infinite linear alternate-reverse;
+}
 
-      /* --- Efecto glitch --- */
-        .glitch{
-           position:relative;
-        color:#0f0;
-        }
-      .glitch::before,
-      .glitch::after{
-           content:attr(data-text);
-            position:absolute;
-        left:0;
-        top:0;
-        width:100%;
-            overflow:hidden;
-       clip:rect(0,900px,0,0);
-        }
-      .glitch::before{
-       left:-2px;
-            text-shadow:2px 0 #ff00c8;
-            animation:glitchTop 2s infinite linear alternate-reverse;
-        }
-      .glitch::after{
-        left:2px;
-            text-shadow:-2px 0 #00fff9;
-            animation:glitchBottom 2s infinite linear alternate-reverse;
-        }
+/* -----------------------------------------
+   Botones
+---------------------------------------- */
+.btn{
+    margin-top:2rem;
+    padding:.6rem 1.2rem;
+    background:#111;
+   border:2px solid #0f0;
+  color:#0f0;
+    cursor:pointer;
+    font-size:1rem;
+    transition:background .2s,color .2s;
+}
+.btn:hover{
+    background:#0f0;
+    color:#000;
+}
 
-        @keyframes glitchTop{
-     0%   {clip:rect(0,99px,2px,0);}
-     20%  {clip:rect(10px,99px,30px,0);}
-     40%  {clip:rect(25px,99px,45px,0);}
-     60%  {clip:rect(5px,999px,25px,0);}
-      80%  {clip:rect(15px,99px,35px,0);}
-        100% {clip:rect(0,99px,2px,0);}
-        }
-        @keyframes glitchBottom{
-     0%   {clip:rect(50px,99px,70px,0);}
-      20%  {clip:rect(55px,99px,75px,0);}
-       40%  {clip:rect(45px,999px,65px,0);}
-     60%  {clip:rect(60px,99px,80px,0);}
-      80%  {clip:rect(50px,999px,70px,0);}
-      100% {clip:rect(55px,99px,75px,0);}
-        }
+/* -------------------------------------------------
+   Spinner de carga
+-------------------------------------------- */
+.loader{
+    border:4px solid #111;
+    border-top:4px solid #0f0;
+    border-radius:50%;
+    width:48px;height:48px;
+    animation:spin 1s linear infinite;
+   margin:2rem auto;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-        @keyframes fadeIn{
-           from{opacity:0;}
-           to{opacity:1;}
-        }
+/* ----------------------------------------
+   Animaciones
+---------------------------------------- */
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:none;}
+}
+@keyframes glitchTop{
+   0%{clip:rect(0,999px,2px,0);}
+   20%{clip:rect(10px,99px,30px,0);}
+   40%{clip:rect(25px,999px,45px,0);}
+   60%{clip:rect(5px,999px,25px,0);}
+   80%{clip:rect(15px,9px,35px,0);}
+    100%{clip:rect(0,99px,2px,0);}
+}
+@keyframes glitchBotom{
+   0%{clip:rect(50px,9px,70px,0);}
+    20%{clip:rect(55px,999px,75px,0);}
+    40%{clip:rect(45px,9px,65px,0);}
+   60%{clip:rect(60px,9px,80px,0);}
+   80%{clip:rect(50px,9px,70px,0);}
+    100%{clip:rect(55px,999px,75px,0);}
+}
 
-        /* --- Botón de avance --- */
-     .nextBtn{
-            margin-top:2rem;
-            padding:.6rem 1.2rem;
-            background:#111;
-           border:2px solid #0f0;
-        color:#0f0;
-            cursor:pointer;
-       font-size:1rem;
-            transition:background .2s;
-        }
-        .nextBtn:hover{
-            background:#0f0;
-            color:#000;
-     }
-  </style>
+/* ---------------------------------------
+   Mini‑juego (campo de texto)
+---------------------------------------------- */
+#challenge{
+    margin-top:1.5rem;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+#secretInput{
+    background:#111;
+   border:2px solid #0f0;
+   color:#0f0;
+    padding:.5rem;
+    font-size:1rem;
+    width:260px;
+    text-align:center;
+}
+#msg{
+    margin-top:.8rem;
+    font-size:.9rem;
+  color:#ff6;
+}
+</style>
 </head>
 <body>
 
-    <!-- Pantalla Inicial -->
-    <section id="screen1" class="screen">
-        <h1 class="glitch" data-text="SISTEMA BONDI">SISTEMA BONDI</h1>
-        <p class="glitch" data-text=" Error 404 - aplicar protocolo HUMAN">
-            Error 404 - aplicar protocolo HUMAN
-        </p>
-        <p class="glitch" data-text="Iniciando desbloqueo de fragmentos">
-     Iniciando protocolo de seguridad 34900 ...
-        </p>
-        <button class="nextBtn" onclick="nextScreen()">▶ Solucionar </button>
-    </section>
+<!-- ==================== PANTALLA INICIAL ==================== -->
+<section id="screen1" class="screen">
+    <h1 class="glitch" data-text="SISTEMA BONDI">SISTEMA BONDI</h1>
+    <p class="glitch" data-text="Error 404 - aplicar protocolo HUMAN">
+        Error 404 – aplicar protocolo HUMAN
+    </p>
+    <p class="glitch" data-text="Iniciando desbloqueo de fragmentos">
+        Iniciando protocolo de seguridad 34900 …
+    </p>
+    <button class="btn" onclick="goNext()">▶ Solucionar</button>
+</section>
 
-    <!-- Pantalla de Instrucciones -->
-    <section id="screen2" class="screen hidden">
-        <h1 class="glitch" data-text="  Acción necesesaria: Liberar un fragmento de ti">
-            Acción necesesaria: Liberar un fragmento de ti
-        </h1>
-        <p class="glitch" data-text="Requisitos: Ser auténtico">
-            Requisitos: Ser auténtico
-       </p>
-        <p class="glitch" data-text="Tiempo de activación: Ahora">
-            Tiempo de activación: ¡AHORA!
-        </p>
-        <button class="nextBtn" onclick="nextScreen()">▶ Pulsar para verificar si protocolo activado</button>
-    </section>
+<!-- ==================== PANTALLA DE INSTRUCCIONES ==================== -->
+<section id="screen2" class="screen hidden">
+    <h1 class="glitch" data-text="Acción necesaria: Liberar un fragmento de ti">
+        Acción necesaria: Liberar un fragmento de ti
+    </h1>
+    <p class="glitch" data-text="Requisitos: Ser auténtico">
+        Requisitos: Ser auténtico
+    </p>
+    <p clas="glitch" data-text="Tiempo de activación: Ahora">
+        Tiempo de activación: ¡AHORA!
+    </p>
 
-    <!-- Pantalla Final -->
-    <section id="screen3" class="screen hidden">
-        <h1 clas="glitch" data-text="Conexión completada">
-            Conexión completada
-        </h1>
-        <p clas="glitch" data-text="Fragmentos unidos">
-            Fragmentos unidos
-        </p>
-        <p class="glitch" data-text="Red reestablecida">
-            Red reestablecida
-     </p>
-    </section>
+    <!-- Mini‑juego obligatorio -->
+    <div id="challenge">
+        <label for="secretInput">Introduce la clave de autenticidad:</label>
+        <input id="secretInput" type="text" autocomplete="off" placeholder="AUTHENTIC">
+        <div id="msg"></div>
+    </div>
 
-    <script>
-        const screens = ['screen1','screen2','screen3'];
-        let idx = 0;
-        function nextScreen(){
-            document.getElementById(screens[idx]).classList.add('hidden');
-            idx = Math.min(idx+1, screens.length-1);
-            document.getElementById(screens[idx]).classList.remove('hidden');
-        }
-    </script>
+    <button class="btn" id="verifyBtn" disabled onclick="verifySecret()">▶ Verificar protocolo</button>
+</section>
+
+<!-- ==================== PANTALLA DE CARGA ==================== -->
+<section id="loaderScreen" class="screen hidden">
+    <div class="loader"></div>
+    <p>Procesando…</p>
+</section>
+
+<!-- ==================== PANTALLA FINAL ==================== -->
+<section id="screen3" class="screen hidden">
+    <h1 class="glitch" data-text="Conexión completada">Conexión completada</h1>
+    <p class="glitch" data-text="Fragmentos unidos">Fragmentos unidos</p>
+    <p class="glitch" data-text="Red reestablecida">Red reestablecida</p>
+</section>
+
+<script>
+/* -------------------------------------------------
+   Gestión de pantallas
+--------------------------------------------------- */
+let current = 0;
+const order = ['screen1','screen2','screen3'];   // secuencia lógica
+function hide(id){document.getElementById(id).classList.add('hidden');}
+function show(id){document.getElementById(id).classList.remove('hidden');}
+
+/* -------------------------------------------------
+   Paso 1 → 2 (con loader)
+--------------------------------------------------- */
+function goNext(){
+    hide(order[current]);               // oculta pantalla actual
+    show('loaderScreen');               // muestra spinner
+    setTimeout(()=>{                    // simula procesamiento (1.2 s)
+        hide('loaderScreen');
+        current++;
+        show(order[current]);            // muestra pantalla2
+    },1200);
+}
+
+/* -------------------------------------------------
+   Mini‑juego: validar la clave
+--------------------------------------------------- */
+const secret = 'AUTHENTIC';
+const input = document.getElementById('secretInput');
+const msg   = document.getElementById('msg');
+const verifyBtn = document.getElementById('verifyBtn');
+
+input.addEventListener('input',()=>{               // habilita botón cuando hay texto
+    verifyBtn.disabled = input.value.trim().length===0;
+    msg.textContent='';
+});
+input.addEventListener('keypress',e=>{             // permite Enter
+    if(e.key==='Enter' && !verifyBtn.disabled){
+        verifySecret();
+    }
+});
+
+function verifySecret(){
+    if(input.value.trim().toUpperCase()===secret){
+        msg.style.color='#0f0';
+        msg.textContent='Clave aceptada. Desbloqueando…';
+        // Simular carga antes de pantalla final
+        hide(order[current]);
+        show('loaderScreen');
+        setTimeout(()=>{
+            hide('loaderScreen');
+            current++;                // avanza a screen3
+            show(order[current]);
+        },1500);
+    }else{
+        msg.style.color='#f66';
+        msg.textContent='Clave incorrecta. Inténtalo de nuevo.';
+    }
+}
+</script>
 </body>
 </html>
